@@ -62,8 +62,8 @@ void Rtc_Configuration(void){
 	}
 	RTC->CRL |= (1 << 4);
 
-    RTC->PRLH = 0x0000;
-    RTC->PRLL = 0x7fff;
+        RTC->PRLH = 0x0000;
+        RTC->PRLL = 0x7fff;
 
 	RTC->CRL &= ~(1 << 4);
 	while (!(RTC->CRL & (1 << 5))){
@@ -367,7 +367,7 @@ void EXTI_Configuration(void){
 	/* External interrupt configuration register 1 (AFIO_EXT1CR1)*/
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource0);
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource1);
-  GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource2);
+        GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource2);
 	/* Clear the EXTI line interrupt pending bit */
 	EXTI_ClearITPendingBit(EXTI_Line0 | EXTI_Line1 | EXTI_Line2 | EXTI_Line3 | EXTI_Line4);
 
@@ -636,13 +636,13 @@ int main(void)
 	/*Configure UART */
 	uartInit.USART_BaudRate = 9600;
 	uartInit.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-    uartInit.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
-    uartInit.USART_Parity = USART_Parity_No;
-    uartInit.USART_StopBits = USART_StopBits_1;
-    uartInit.USART_WordLength = USART_WordLength_8b;
-    USART_Init(USART3, &uartInit);
+        uartInit.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+        uartInit.USART_Parity = USART_Parity_No;
+        uartInit.USART_StopBits = USART_StopBits_1;
+        uartInit.USART_WordLength = USART_WordLength_8b;
+        USART_Init(USART3, &uartInit);
 
-    USART_Cmd(USART3, ENABLE);
+        USART_Cmd(USART3, ENABLE);
 
 	/* Init functions */
 	Rtc_Configuration();
@@ -661,19 +661,19 @@ int main(void)
 		if ((u8Minute == u8SetMinute) && (u8Hour == u8SetHour)){
 			GPIO_SetBits(GPIOC, GPIO_Pin_14);
 		}
-		/*Check warning humidity and Temparature */
+		/*Check warning humidity and Temperature */
 		if ((u32SetHum == u8Buff[0]) || (u32SetTemp == u8Buff[2])){
 			GPIO_SetBits(GPIOC, GPIO_Pin_14);
 		}
 
-	  /* Show Humidity and Temparature  */
+	  /* Show Humidity and Temperature  */
 		if (u32count % 4 == 0U){
 			if(dht11_read(u8Buff)){
 				 sprintf(DisplayScreen,"Humidity : %d    ",u8Buff[0]);
 				 I2C_LCD_Puts(DisplayScreen);
 				 UART3_Puts(DisplayScreen);
 				 I2C_LCD_NewLine();
-				 sprintf(DisplayScreen,"Temparature : %d    ",u8Buff[2]);
+				 sprintf(DisplayScreen,"Temperature : %d    ",u8Buff[2]);
 				 I2C_LCD_Puts(DisplayScreen);
 				 UART3_Puts(DisplayScreen);
 
